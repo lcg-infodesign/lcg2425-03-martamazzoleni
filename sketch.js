@@ -21,8 +21,9 @@ function setup() {
     let lineLength = map(length, 1072, 6575, 100, 500);
     let riverColor = color(0, 0, 139, 100); 
 
-    let startX = random(100, width - 100);
-    let startY = random(100, height - 100);
+    //margine
+    let startX = random(50, width - 50 - lineLength); 
+    let startY = random(100, height - 50); 
     let angle = random(-PI / 4, PI / 4);
 
     rivers.push({
@@ -38,22 +39,22 @@ function setup() {
 }
 
 function draw() {
-  background("#F0EAD6"); //sfondo 
+  background("#F0EAD6"); // Sfondo 
 
-  //titolo a sinistra
+  // titolo a sinistra
   fill("#00008B");
   textSize(32);
   textAlign(LEFT, TOP);
-  text("Fiumi", 20, 20);
+  text("FIUMI DEL MONDO", 20, 20);
 
-  //fiumi
+  //disegna i fiumi
   let hoveredRiver = null;
 
   for (let river of rivers) {
     let isHovered = isMouseOverLine(river.linePoints);
 
-    // l'info solo per un fiume alla volta
-    if (isHovered) {
+    //hover senza testo selezionato
+    if (isHovered && !selectedRiver) {
       hoveredRiver = river;
     }
 
@@ -70,31 +71,33 @@ function draw() {
     pop();
   }
 
-  //info del fiume a destra
-  if (hoveredRiver) {
-    showRiverInfo(hoveredRiver);
+  //info fiume sel.
+  if (selectedRiver) {
+    showRiverInfo(selectedRiver); //info sel.
+  } else if (hoveredRiver) {
+    showRiverInfo(hoveredRiver); //info hover
   }
 }
 
 function mousePressed() {
-  //seleziona fiume al click
+  //sel. fiume al click
   for (let river of rivers) {
     if (isMouseOverLine(river.linePoints)) {
       selectedRiver = river;
       return;
     }
   }
-  selectedRiver = null; //deseleziona
+  selectedRiver = null; //desel.
 }
 
 function showRiverInfo(river) {
   fill("#00008B");
   noStroke();
   textSize(16);
-  textAlign(RIGHT, TOP); // Allineamento a destra
+  textAlign(RIGHT, TOP); //allineamento a destra
   text(
-    `Nome: ${river.name}\nLunghezza: ${river.length} km\nPortata: ${river.discharge} m³/s`,
-    width - 20, 20 // Posizione a destra
+    `NOME: ${river.name}\nLUNGHEZZA: ${river.length} km\nPORTATA: ${river.discharge} m³/s`,
+    width - 20, 20 //pos. dx
   );
 }
 
@@ -124,3 +127,4 @@ function isMouseOverLine(linePoints) {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
+
