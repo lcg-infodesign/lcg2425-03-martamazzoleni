@@ -3,7 +3,7 @@ let data;
 let selectedRiver = null; //variabile fiume selezionato
 
 function preload() {
-  //datset
+  //dataset
   data = loadTable("assets/rivers.csv", "csv", "header");
 }
 
@@ -40,11 +40,11 @@ function setup() {
 function draw() {
   background("#F0EAD6"); //sfondo 
 
-  //titolo
+  //titolo a sinistra
   fill("#00008B");
   textSize(32);
-  textAlign(RIGHT, TOP);
-  text("Fiumi", width - 20, 20);
+  textAlign(LEFT, TOP);
+  text("Fiumi", 20, 20);
 
   //fiumi
   let hoveredRiver = null;
@@ -70,7 +70,7 @@ function draw() {
     pop();
   }
 
-  //info del fiume 
+  //info del fiume a destra
   if (hoveredRiver) {
     showRiverInfo(hoveredRiver);
   }
@@ -91,10 +91,10 @@ function showRiverInfo(river) {
   fill("#00008B");
   noStroke();
   textSize(16);
-  textAlign(LEFT, TOP);
+  textAlign(RIGHT, TOP); // Allineamento a destra
   text(
     `Nome: ${river.name}\nLunghezza: ${river.length} km\nPortata: ${river.discharge} m³/s`,
-    20, 20
+    width - 20, 20 // Posizione a destra
   );
 }
 
@@ -124,5 +124,3 @@ function isMouseOverLine(linePoints) {
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
-
-
